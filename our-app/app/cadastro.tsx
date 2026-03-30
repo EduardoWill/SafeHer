@@ -14,30 +14,40 @@ const [num, numSet] = useState("");
     return( 
 <ThemedView style={styles.container}>
     
-        <Text>Bah</Text>
+        <Text>Titúlo</Text>
+
         <TextInput value={nome} 
         onChangeText={setNome}
         placeholder="Nome Completo"
         style={styles.input}/>
+
         <TextInput value={email} 
         onChangeText={setEmail}
         placeholder="Email"
-        style={styles.input}/>
+        style={styles.input}
+        keyboardType="email-address"/>
+
           <TextInput value={senha} 
         onChangeText={setSenha}
         placeholder="Senha"
         style={styles.input}/>
+
           <TextInput value={conSenha} 
         onChangeText={conSetSenha}
         placeholder="Confirme sua Senha"
         style={styles.input}/>
+
           <TextInput value={cpf} 
         onChangeText={setCpf}
         placeholder="CPF"
-        style={styles.input}/>
+        keyboardType ="numeric"
+        style={styles.input}
+        />
+
           <TextInput value={num} 
         onChangeText={numSet}
         placeholder="Número de Celular"
+        keyboardType = "phone-pad"
         style={styles.input}/>
         
    
