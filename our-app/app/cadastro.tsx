@@ -5,18 +5,39 @@ import { ThemedView } from "@/components/themed-view";
 
 
 export default function Cadastro () {
-const [text,setText] = useState("");
+const [nome,setNome] = useState("");
+const [email, setEmail] = useState("");
+const [senha, setSenha] = useState("");
+const [conSenha, conSetSenha] = useState ("");
+const [cpf, setCpf] = useState("");
+const [num, numSet] = useState("");
     return( 
 <ThemedView style={styles.container}>
     
         <Text>Bah</Text>
-        <TextInput value={text} 
-        onChangeText={setText}
-        placeholder="useless placeholder"
+        <TextInput value={nome} 
+        onChangeText={setNome}
+        placeholder="Nome Completo"
         style={styles.input}/>
-        <TextInput value={text} 
-        onChangeText={setText}
-        placeholder="useless placeholder"
+        <TextInput value={email} 
+        onChangeText={setEmail}
+        placeholder="Email"
+        style={styles.input}/>
+          <TextInput value={senha} 
+        onChangeText={setSenha}
+        placeholder="Senha"
+        style={styles.input}/>
+          <TextInput value={conSenha} 
+        onChangeText={conSetSenha}
+        placeholder="Confirme sua Senha"
+        style={styles.input}/>
+          <TextInput value={cpf} 
+        onChangeText={setCpf}
+        placeholder="CPF"
+        style={styles.input}/>
+          <TextInput value={num} 
+        onChangeText={numSet}
+        placeholder="Número de Celular"
         style={styles.input}/>
         
    
