@@ -30,11 +30,13 @@ const [num, numSet] = useState("");
           <TextInput value={senha} 
         onChangeText={setSenha}
         placeholder="Senha"
+        secureTextEntry={true}
         style={styles.input}/>
 
           <TextInput value={conSenha} 
         onChangeText={conSetSenha}
         placeholder="Confirme sua Senha"
+        secureTextEntry={true}
         style={styles.input}/>
 
           <TextInput value={cpf} 
