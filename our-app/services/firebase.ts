@@ -7,7 +7,7 @@ export const salvarTeste = async () => {
             mensagem: "Firebase conectado"
         });
 
-    console.log("Salvo com sucesso!");
+    console.log("Salvo com sucesso!!");
     } catch (error) {
         console.log("Erro ao salvar", error);
     }
