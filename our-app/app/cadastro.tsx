@@ -1,6 +1,5 @@
-import { StyleSheet, TextInput, View, Text, Button, Alert} from "react-native";
+import { StyleSheet, TextInput, View, Text, Button, Modal, TouchableOpacity } from "react-native";
 import React, {useState} from "react";
-import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 
 
@@ -11,41 +10,50 @@ const [senha, setSenha] = useState("");
 const [conSenha, conSetSenha] = useState ("");
 const [cpf, setCpf] = useState("");
 const [num, numSet] = useState("");
+const [modalVisible, setModalVisible] = useState(false);
+const [modalTitle, setModalTitle] = useState("");
+const [modalMessage, setModalMessage] = useState("");
+
+const showModal = (title: string, message: string) => {
+  setModalTitle(title);
+  setModalMessage(message);
+  setModalVisible(true);
+};
 
 const handleSubmit = () => {
   if (!nome || !email || !senha || !conSenha || !cpf || !num) {
-    Alert.alert("Erro", "Por favor, preencha todos os campos.");
+    showModal("Erro", "Por favor, preencha todos os campos.");
     return;
   }
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (nome.length >= 10 && nome.length <= 60) {
-    Alert.alert("Erro", "O nome deve conter entre 10 e 60 caracteres.");
+  if (nome.length < 10 || nome.length > 60) {
+    showModal("Erro", "O nome deve conter entre 10 e 60 caracteres.");
     return;
-  } 
+  }
   
   if (!emailRegex.test(email)) {
-    Alert.alert("Erro", "Email inválido.");
+    showModal("Erro", "Email inválido.");
     return;
   }
 
   if (senha.length < 6) {
-    Alert.alert("Erro", "A senha deve ter pelo menos 6 caracteres.");
+    showModal("Erro", "A senha deve ter pelo menos 6 caracteres.");
     return;
   }
 
   if (senha !== conSenha) {
-    Alert.alert("Erro", "As senhas não coincidem.");
+    showModal("Erro", "As senhas não coincidem.");
     return;
   }
 
   const cpfOnlyDigits = cpf.replace(/\D/g, "");
   if (cpfOnlyDigits.length !== 11) {
-    Alert.alert("Erro", "CPF deve conter 11 dígitos.");
+    showModal("Erro", "CPF deve conter 11 dígitos.");
     return;
   }
 
-  Alert.alert("Sucesso", "Cadastro realizado com sucesso!");
+  showModal("Sucesso", "Cadastro realizado com sucesso!");
 };
 
     return( 
@@ -93,8 +101,26 @@ const handleSubmit = () => {
           title="Enviar" onPress={handleSubmit}
         />
 
+        <Modal
+          visible={modalVisible}
+          animationType="slide"
+          transparent={true}
+          onRequestClose={() => setModalVisible(false)}
+        >
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContainer}>
+              <Text style={styles.modalTitle}>{modalTitle}</Text>
+              <Text style={styles.modalMessage}>{modalMessage}</Text>
+              <TouchableOpacity
+                style={styles.modalButton}
+                onPress={() => setModalVisible(false)}
+              >
+                <Text style={styles.modalButtonText}>Fechar</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
 
-   
     </ThemedView>
   );
 
@@ -117,8 +143,40 @@ const styles = StyleSheet.create({
         padding:20,
         borderRadius: 20,
         borderColor: "#800080",
+    },
+    modalOverlay: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "rgba(0,0,0,0.5)",
+    },
+    modalContainer: {
+      width: "80%",
+      padding: 20,
+      backgroundColor: "#fff",
+      borderRadius: 12,
+      alignItems: "center",
+    },
+    modalTitle: {
+      fontSize: 18,
+      fontWeight: "bold",
+      marginBottom: 8,
+    },
+    modalMessage: {
+      fontSize: 16,
+      marginBottom: 12,
+      textAlign: "center",
+    },
+    modalButton: {
+      backgroundColor: "#800080",
+      paddingVertical: 10,
+      paddingHorizontal: 16,
+      borderRadius: 8,
+    },
+    modalButtonText: {
+      color: "#fff",
+      fontWeight: "bold",
     }
-
 
 })
 
