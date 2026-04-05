@@ -13,13 +13,14 @@ export const salvarTeste = async () => {
     }
 };
 
+
 export const salvarUsuario = async (dados: any) => {
     try {
         const usuariosRef = ref(database, "users");
 
         await push(usuariosRef, dados);
 
-        console.log("Usuário salvo com sucesso");
+        console.log("Usuário salvo com sucesso!");
     } catch (error) {
         console.log("Erro ao salvar", error);
     }

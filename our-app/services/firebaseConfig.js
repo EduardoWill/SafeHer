@@ -1,20 +1,15 @@
-
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyA3cRwHHvrJKASXjNPoEdcEKDNPC-7ZbJw",
-    authDomain: "safeher-4a7ca.firebaseapp.com",
-    databaseURL: "https://safeher-4a7ca-default-rtdb.firebaseio.com",
-    projectId: "safeher-4a7ca",
-    storageBucket: "safeher-4a7ca.firebasestorage.app",
-    messagingSenderId: "808608328634",
-    appId: "1:808608328634:web:befcf5f319175ff7af8b83",
-    measurementId: "G-M8K1BR7M9G"
+    apiKey: "AIzaSyAU6k3DZ3ORBYvtgYHYULNgabUo0R6nKUk",
+    authDomain: "safe-her-cb592.firebaseapp.com",
+    projectId: "safe-her-cb592",
+    storageBucket: "safe-her-cb592.firebasestorage.app",
+    messagingSenderId: "480631612840",
+    appId: "1:480631612840:web:c4d7bb3c5bd59fc67ea99d"
 };
 
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 export const database = getDatabase(app);
