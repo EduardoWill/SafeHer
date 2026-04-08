@@ -28,41 +28,54 @@ export default function Cadastro() {
     setModalVisible(true);
   };
 
-  const handleCadastro = () => {
-     if (!nome || !email || !senha || !conSenha || !cpf || !num) {
-    showModal("Erro", "Por favor, preencha todos os campos.");
-    return;
-  }
+  const handleCadastro = async () => {
+    if (!nome || !email || !senha || !conSenha || !cpf || !num) {
+      showModal("Erro", "Por favor, preencha todos os campos.");
+      return;
+    }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (nome.length < 10 || nome.length > 60) {
-    showModal("Erro", "O nome deve conter entre 10 e 60 caracteres.");
-    return;
-  }
-  
-  if (!emailRegex.test(email)) {
-    showModal("Erro", "Email inválido.");
-    return;
-  }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  if (senha.length < 6) {
-    showModal("Erro", "A senha deve ter pelo menos 6 caracteres.");
-    return;
-  }
+    if (nome.length < 10 || nome.length > 60) {
+      showModal("Erro", "O nome deve conter entre 10 e 60 caracteres.");
+      return;
+    }
 
-  if (senha !== conSenha) {
-    showModal("Erro", "As senhas não coincidem.");
-    return;
-  }
+    if (!emailRegex.test(email)) {
+      showModal("Erro", "Email inválido.");
+      return;
+    }
 
-  const cpfOnlyDigits = cpf.replace(/\D/g, "");
-  if (cpfOnlyDigits.length !== 11) {
-    showModal("Erro", "CPF deve conter 11 dígitos.");
-    return;
-  }
+    if (senha.length < 6) {
+      showModal("Erro", "A senha deve ter pelo menos 6 caracteres.");
+      return;
+    }
 
-  showModal("Sucesso", "Cadastro realizado com sucesso!");
-};
+    if (senha !== conSenha) {
+      showModal("Erro", "As senhas não coincidem.");
+      return;
+    }
+
+    const cpfOnlyDigits = cpf.replace(/\D/g, "");
+    if (cpfOnlyDigits.length !== 11) {
+      showModal("Erro", "CPF deve conter 11 dígitos.");
+      return;
+    }
+
+    try {
+      await salvarUsuario({
+        nome,
+        email,
+        senha,
+        cpf,
+        telefone: num,
+      });
+
+      showModal("Sucesso", "Cadastro realizado com sucesso!");
+    } catch (error) {
+      showModal("Erro", "Erro ao cadastrar usuário.");
+    }
+  };
   return (
     <ThemedView style={styles.container}>
       <Text style={{ fontSize: 20, marginBottom: 10 }}>Cadastro</Text>
