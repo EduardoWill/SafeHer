@@ -1,7 +1,9 @@
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "./firebaseConfig";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { signInWithEmailAndPassword } from "firebase/auth";
 
 export const salvarUsuario = async (dados: any) => {
   try {
@@ -31,26 +33,22 @@ export const salvarUsuario = async (dados: any) => {
     }
 
     throw new Error("Erro ao cadastrar usuário.");
+  }
+};
 
-    export const loginUsuario = async (email: string) => {
-      try {
-        const userCredential = await signInWithEmailAndPassword(
-          auth,
-          email,
-          senha,
-        );
-        return userCredential.user;
-      } catch (error: any) {
-        if (error.code == "auth/user-not-found") {
-          throw new Error("Usuário não encontrado.");
-        }
+export const loginUsuario = async (email: string, senha: string) => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, senha);
+    return userCredential.user;
+  } catch (error: any) {
+    if (error.code == "auth/user-not-found") {
+      throw new Error("Usuário não encontrado.");
+    }
 
-        if (error.code == "auth/wrong-password") {
-          throw new Error("Senha incorreta.");
-        }
+    if (error.code == "auth/wrong-password") {
+      throw new Error("Senha incorreta.");
+    }
 
-        throw new Error("Erro ao fazer login.");
-      }
-    };
+    throw new Error("Erro ao fazer login.");
   }
 };
