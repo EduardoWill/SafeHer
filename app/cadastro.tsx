@@ -7,6 +7,13 @@ import {
   TouchableOpacity,
   Button,
 } from "react-native";
+import {
+  validarNome,
+  validarEmail,
+  validarSenha,
+  validarCPF,
+  validarTelefone,
+} from "@/utils/regex";
 import React, { useState } from "react";
 import { ThemedView } from "@/components/themed-view";
 import { salvarUsuario } from "@/services/firebase";
@@ -29,39 +36,34 @@ export default function Cadastro() {
   };
 
   const handleCadastro = async () => {
-    if (!nome || !email || !senha || !conSenha || !cpf || !num) {
-      showModal("Erro", "Por favor, preencha todos os campos.");
-      return;
-    }
+if (!validarNome(nome)) {
+  showModal("Erro", "Nome deve ter entre 10 e 60 caracteres.");
+  return;
+}
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+if (!validarEmail(email)) {
+  showModal("Erro", "Email inválido.");
+  return;
+}
 
-    if (nome.length < 10 || nome.length > 60) {
-      showModal("Erro", "O nome deve conter entre 10 e 60 caracteres.");
-      return;
-    }
+if (!validarSenha(senha)) {
+  showModal("Erro", "Senha deve ter no mínimo 6 caracteres.");
+  return;
+}
 
-    if (!emailRegex.test(email)) {
-      showModal("Erro", "Email inválido.");
-      return;
-    }
+if (!validarCPF(cpf)) {
+  showModal("Erro", "CPF inválido.");
+  return;
+}
 
-    if (senha.length < 6) {
-      showModal("Erro", "A senha deve ter pelo menos 6 caracteres.");
-      return;
-    }
-
-    if (senha !== conSenha) {
-      showModal("Erro", "As senhas não coincidem.");
-      return;
-    }
-
-    const cpfOnlyDigits = cpf.replace(/\D/g, "");
-    if (cpfOnlyDigits.length !== 11) {
-      showModal("Erro", "CPF deve conter 11 dígitos.");
-      return;
-    }
-
+if (!validarTelefone(num)) {
+  showModal("Erro", "Telefone inválido.");
+  return;
+}
+if (senha !== conSenha) {
+  showModal("Erro", "Senhas não coincidem.");
+  return;
+}
     try {
       await salvarUsuario({
         nome,
